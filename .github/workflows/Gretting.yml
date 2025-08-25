@@ -1,0 +1,8 @@
+name: Greeting
+on: push
+jobs:
+  greet:
+    runs-on: Runner-1
+    steps:
+      - name: "greet users"
+        run: echo "Hello World"
