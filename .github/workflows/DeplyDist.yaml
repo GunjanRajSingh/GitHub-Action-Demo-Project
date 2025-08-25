@@ -1,4 +1,4 @@
-name: Kya-Haal          #Project ka naam
+name: Deploy Dist          #Project ka naam
 on: [push, workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
 # on:
 #   push:
@@ -18,19 +18,20 @@ jobs:
         #   git clone https://github.com/${{github.repository}}.git
        
        - name: Get Code 
-         uses: actions/checkout@v5                          #Local se vm me code copy ho jayega
- 
+         uses: actions/checkout@v5                          #Local se vm me code copy ho jayega 
        - name: Install Node.js v20
          uses: actions/setup-node@v4                         #Node v20 install hoga
          with:
            node-version: 20
-
        - name: Print Node Version                            #Node ka version check karenge. Aapke Node install karna hoga aapke self Hosted runner me.
          run: node -v
-
+       - name: Cache Dependencies
+         uses: actions//cache@v4
+         with: 
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock-json')}}
        - name: Install Dependencies
          run: npm install                                   # "npm ci" bhi use kar skate hai automated env ke liye
-        
        - name: Run Test Case                                # Run test Case from Package.json
          run: npm run test
   
@@ -39,18 +40,19 @@ jobs:
     runs-on: VM-Runner     #runner ka kaam
     steps:
       - name: Get Code
-        uses: actions/checkout@v5
-    
+        uses: actions/checkout@v5 
       - name: Install Node.js v20
         uses: actions/setup-node@v4
         with:
            node-version: 20
-      
+      - name: Cache Dependencies
+        uses: actions//cache@v4
+        with: 
+         path: ~/.npm
+         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock-json') }}     #file ke basis par hum unique key create kar skate hai
       - name: Install Dependencies
         run: npm ci
-
       - name: Build Project
         run: npm run build
-
       - name: Deploy
         run: echo "Deploy Successful"                        # Abhi actual deply nahy kar rahe. bas print kar rahe hai
