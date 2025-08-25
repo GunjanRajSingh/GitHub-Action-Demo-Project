@@ -37,7 +37,7 @@ jobs:
   
   Deploy:
     needs: Test                                             #Test job complete hone ke baad ye Deploy job chale. parallel me na chale job dono saath me
-    runs-on: VM-Runner     #runner ka kaam
+    runs-on: Runner     #runner ka kaam
     steps:
       - name: Get Code
         uses: actions/checkout@v5 
