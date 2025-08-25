@@ -8,8 +8,16 @@ jobs:
   test:                    #job ka naam
     runs-on: VM-Runner     #runner ka kaam
     steps:
-      - name: Get Code     #local se runner me code copy kara raha hu
-        run: |
-          echo "Cloning Repo.."
-          echo "${{toJson(github)}}"         #context me code dalenge
-          git clone https://github.com/${{github.repository}}.git
+      # - name: Get Code     #local se runner me code copy kara raha hu
+        # run: |
+        #   echo "Cloning Repo.."
+        #   echo "${{toJson(github)}}"         #Expression Context me code dalenge
+        #   git clone https://github.com/${{github.repository}}.git
+        - name: Get Code 
+          uses: actions/checkout@v5                          #Local se vm me code copy ho jayega
+ 
+        - name: Install Node.js v20
+          uses: actions/setup-node@v4                         #Node v20 install hoga
+
+        - name: Print Node Version
+          run: node -v
