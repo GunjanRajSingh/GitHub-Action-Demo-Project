@@ -1,11 +1,11 @@
 name: Deploy Dist          #Project ka naam
-on: [push, workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
-# on:
-#   push:
-#     branches:
-#       - main
-#       - features/**
-#       - workflow_dispatch
+# on: [push, workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
+on:
+  push:
+    branches:
+      - main
+      - features/**
+  workflow_dispatch:
 
 jobs:
   Test:                   #job ka naam
@@ -35,7 +35,7 @@ jobs:
        - name: Run Test Case                                # Run test Case from Package.json
          run: npm run test
   
-  Deploy:
+  Build:
     needs: Test                                             #Test job complete hone ke baad ye Deploy job chale. parallel me na chale job dono saath me
     runs-on: Runner     #runner ka kaam
     steps:
@@ -54,5 +54,20 @@ jobs:
         run: npm ci
       - name: Build Project
         run: npm run build
+      - name: Download Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: dist
+
+  Deploy:
+    needs: Build                                             #Test job complete hone ke baad ye Deploy job chale. parallel me na chale job dono saath me
+    runs-on: Runner     #runner ka kaam
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files
+          path: dist
       - name: Deploy
         run: echo "Deploy Successful"                        # Abhi actual deply nahy kar rahe. bas print kar rahe hai
