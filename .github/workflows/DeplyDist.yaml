@@ -1,11 +1,11 @@
 name: Kya-Haal          #Project ka naam
-# on: [workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
-on:
-  push:
-    branches:
-      - main
-      - features/**
-      - workflow_dispatch
+ on: [push,workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
+# on:
+#   push:
+#     branches:
+#       - main
+#       - features/**
+#       - workflow_dispatch
 
 jobs:
   Test:                   #job ka naam
