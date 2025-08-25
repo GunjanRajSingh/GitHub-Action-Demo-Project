@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: build
+          path: dist
 
   Deploy:
     needs: Build                                             #Test job complete hone ke baad ye Deploy job chale. parallel me na chale job dono saath me
