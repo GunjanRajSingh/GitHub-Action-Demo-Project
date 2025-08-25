@@ -1,4 +1,4 @@
-name: Deply Dist          #Project ka naam
+name: Kya-Haal          #Project ka naam
 # on: [workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
 on:
   push:
