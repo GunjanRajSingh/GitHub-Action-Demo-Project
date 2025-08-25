@@ -1,5 +1,4 @@
-name: Deploy Dist          #Project ka naam
-# on: [push, workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
+name: Deploy React App to GitHub Pages         #Project ka naam
 on:
   push:
     branches:
@@ -10,13 +9,7 @@ on:
 jobs:
   Test:                   #job ka naam
     runs-on: Runner     #runner ka kaam
-    steps:
-      # - name: Get Code     #local se runner me code copy kara raha hu
-        # run: |
-        #   echo "Cloning Repo.."
-        #   echo "${{toJson(github)}}"         #Expression Context me code dalenge
-        #   git clone https://github.com/${{github.repository}}.git
-       
+    steps:       
        - name: Get Code 
          uses: actions/checkout@v5                          #Local se vm me code copy ho jayega 
        - name: Install Node.js v20
@@ -55,19 +48,28 @@ jobs:
       - name: Build Project
         run: npm run build
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: dist-files
+          name: github-pages
           path: dist
 
   Deploy:
     needs: Build                                             #Test job complete hone ke baad ye Deploy job chale. parallel me na chale job dono saath me
-    runs-on: Runner     #runner ka kaam
+    runs-on: Runner                                          #runner ka kaam
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write                                           # to deploy to Pages
+      id-token: write                                        # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
     steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4                        # or specific "vX.X.X" version tag for this action
         with:
-          name: dist-files
-          path: dist
-      - name: Deploy
-        run: echo "Deploy Successful"                        # Abhi actual deply nahy kar rahe. bas print kar rahe hai
+            token: ${{secrets.GITHUB_TOKEN}}                 #Automatically created token for each workflow run
