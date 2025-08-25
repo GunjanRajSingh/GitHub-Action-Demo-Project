@@ -37,7 +37,7 @@ jobs:
     runs-on: VM-Runner     #runner ka kaam
     steps:
       - name: Get Code
-        uses: action/checkout@v5
+        uses: actions/checkout@v5
     
       - name: Install Node.js v20
         uses: actions/setup-node@v4
