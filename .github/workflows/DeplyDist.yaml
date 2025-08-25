@@ -1,0 +1,15 @@
+name: Deply Dist          #Project ka naam
+on: [push,workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
+# on: 
+#   - push
+#   - workflow_dispatch
+
+jobs:
+  test:                    #job ka naam
+    runs-on: VM-Runner     #runner ka kaam
+    steps:
+      - name: Get Code     #local se runner me code copy kara raha hu
+        run: |
+          echo "Cloning Repo.."
+          echo "${{toJson(github)}}"         #context me code dalenge
+          git clone https://github.com/${{github.repository}}.git
