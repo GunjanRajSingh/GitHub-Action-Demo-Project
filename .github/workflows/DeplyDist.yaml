@@ -5,9 +5,10 @@ on:
     branches:
       - main
       - features/**
+      - workflow_dispatch
 
 jobs:
-  test:                   #job ka naam
+  Test:                   #job ka naam
     runs-on: VM-Runner     #runner ka kaam
     steps:
       # - name: Get Code     #local se runner me code copy kara raha hu
@@ -34,6 +35,7 @@ jobs:
          run: npm run test
   
   Deploy:
+    needs: Test                                             #Test job complete hone ke baad ye Deploy job chale. parallel me na chale job dono saath me
     runs-on: VM-Runner     #runner ka kaam
     steps:
       - name: Get Code
