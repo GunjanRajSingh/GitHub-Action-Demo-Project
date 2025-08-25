@@ -1,5 +1,5 @@
 name: Kya-Haal          #Project ka naam
- on: [push,workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
+on: [push, workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho isliye workflow_dispatch likha hai
 # on:
 #   push:
 #     branches:
