@@ -22,8 +22,8 @@ jobs:
         - name: Install Node.js v20
           uses: actions/setup-node@v4                         #Node v20 install hoga
 
-        # - name: Print Node Version
-        #   run: node -v
+        - name: Print Node Version                            #Node ka version check karenge
+          run: node -v
         - name: Install Dependencies
           run: npm install                                   # "npm ci" bhi use kar skate hai automated env ke liye
         
