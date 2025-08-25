@@ -9,7 +9,7 @@ on: [push, workflow_dispatch]    #kaha se trigger karna hai, manually trigger ho
 
 jobs:
   Test:                   #job ka naam
-    runs-on: VM-Runner     #runner ka kaam
+    runs-on: Runner     #runner ka kaam
     steps:
       # - name: Get Code     #local se runner me code copy kara raha hu
         # run: |
