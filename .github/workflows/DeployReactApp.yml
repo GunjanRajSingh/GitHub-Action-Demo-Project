@@ -5,7 +5,7 @@ on:
       - main
       - features/**
     paths-ignore:
-        - .github/workflows/DeployDist.yaml
+        - .github/workflows/DeployReactApp.yaml
   workflow_dispatch:
 
 jobs:

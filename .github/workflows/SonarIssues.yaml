@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+        - .github/workflows/DeployReactApp.yaml
+        - .github/workflows/DeployDist.yaml
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
@@ -17,6 +20,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y unzip
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
